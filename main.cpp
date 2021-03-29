@@ -16,9 +16,12 @@ int main(int argc, char** argv){
     std::cout << "\n";
   };
   show();
-  for ([[maybe_unused]]std::weakly_incrementable auto const& i: vs::iota(0, 10)){
-    s.move();
-    show();
+  for (auto func: {&snake::turn_down, &snake::turn_left, &snake::turn_up, &snake::turn_right}) {
+    std::invoke(func, s);
+    for ([[maybe_unused]]std::weakly_incrementable auto const&i: vs::iota(0, 4)){
+      s.move();
+      show();
+    }
   }
 
 

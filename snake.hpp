@@ -23,7 +23,7 @@ public:
   }
 
   void turn_up() { direction_ = {0, 1}; }
-  void turn_down() { direction_ = {0, -1};}
+  void turn_down() { direction_ = {0, -1}; }
   void turn_left() { direction_ = {-1, 0}; }
   void turn_right() { direction_ = {0, 1}; }
 
@@ -32,10 +32,23 @@ public:
   void move();
 
   [[nodiscard]] auto const& body() const { return body_; }
+  [[nodiscard]] auto next_head_position() const {
+    return body_.back() + direction_;
+  }
+  [[nodiscard]] auto length() const { return body_.size(); }
+
+  virtual ~snake() = default;
 private:
   snake_body body_;
   point<int> direction_{1, 0};
 };
 
+class user_snake: public snake{
+public:
+  using snake::snake;
+protected:
+  using snake::feed;
+  using snake::move;
+};
 
 #endif //SNAKE_SNAKE_HPP
